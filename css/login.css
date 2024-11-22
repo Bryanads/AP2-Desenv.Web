@@ -33,6 +33,11 @@
     color: var(--cor-cinza);
 }
 
+#detalhes a{
+    font-size: 16px;
+    color: var(--cor-cinza);
+}
+
 /* Estilizando o formulário de login */
 #login_form {
     flex: 1;
