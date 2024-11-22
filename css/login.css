@@ -1,75 +1,128 @@
-body {
-    font-family: Arial, sans-serif;
-    background-color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100vh;
-    margin: 0;
-    background-color: #000;
-}
-
-h1{
-    color: white;
-    margin: 3rem 3rem 3rem 0rem;
-
-}
-
-h2{
-    color: white;
-    margin: 3rem 3rem 3rem 0rem;
+:root {
+    --cor-preta: #141414;
+    --cor-dourada: #FFC72C;
+    --cor-branca: #ffffff;
+    --cor-cinza: #333;
 }
 
 #login_card {
-    background-color: #fff;
-    padding: 30px;
-    border-radius: 10px;
+    margin: 5rem 0rem;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    border-radius: 8px;
+    background-color: var(--cor-branca);
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
-    width: 300px;
 }
 
-#login_card p {
+/* Estilizando o bloco de detalhes */
+#detalhes {
+    flex: 1;
+    padding-right: 20px;
+}
+
+#detalhes h1 {
+    font-size: 20px;
+    font-weight: bold;
+    color: var(--cor-preta);
+    margin-bottom: 5px;
+}
+
+#detalhes h2 {
     font-size: 16px;
-    margin-bottom: 20px;
-    color: #000;
+    color: var(--cor-cinza);
 }
 
-#senha_input_field {
-    width: 100%;
-    padding: 10px;
-    margin-bottom: 20px;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-    font-size: 16px;
+/* Estilizando o formulário de login */
+#login_form {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 }
 
-#login_btn {
-    background-color: #000;
-    color: #fff;
-    padding: 10px 20px;
+#input_container {
+    display: flex;
+    flex-direction: column;
+}
+
+/* O parágrafo deve ficar acima do input */
+p {
+    margin-bottom: 10px;
+    font-size: 14px;
+    color: var(--cor-cinza);
+    font-weight: 500;
+}
+
+/* Estilizando o input de senha */
+input[type="password"] {
+    padding: 12px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    background-color: #f7f7f7;
+    font-size: 14px;
+    color: var(--cor-preta);
+    transition: border-color 0.3s ease;
+}
+
+input[type="password"]:focus {
+    border-color: var(--cor-dourada);
+    outline: none;
+}
+
+/* Estilizando o botão */
+button {
+    padding: 12px;
+    background-color: var(--cor-dourada);
+    color: var(--cor-preta);
     border: none;
-    border-radius: 5px;
+    border-radius: 6px;
     cursor: pointer;
     font-size: 16px;
-    width: 100%;
+    font-weight: 600;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
-#login_btn:hover {
-    background-color: #858585;
-    color: #000;
+button:hover {
+    background-color: #e0a900;
+    transform: scale(1.05);
 }
 
-
+button:active {
+    background-color: #c98e00;
+}
 
 @media (max-width: 768px) {
-    body {
+    #login_card {
         flex-direction: column;
-        justify-content: flex-start;
+        height: auto;
     }
 
-    #login_card {
+    #detalhes {
+        padding-right: 0; /* Remove o padding quando estiver em vertical */
+        margin-bottom: 20px; /* Espaço entre o detalhes e o formulário */
+    }
+
+    #login_form {
+        width: auto;
+        align-items: center;
+    }
+
+    #input_container {
+        margin-top: 10px;
         width: 100%;
-        padding: 20px;
+        align-items: center;
+    }
+
+    input, button {
+        width: 100%; /* Faz com que ambos tenham a mesma largura */
+        max-width: 200px; /* Limita a largura máxima, se necessário */
+        padding: 10px; /* Garantir que o padding seja o mesmo para ambos */
+        box-sizing: border-box; /* Para que padding não afete o tamanho final */
+    }
+
+    p {
+        margin-bottom: 5px; /* Menos espaço entre o parágrafo e o input */
     }
 }

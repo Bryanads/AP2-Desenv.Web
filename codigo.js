@@ -1,3 +1,48 @@
+const manipulaBotaoLogin = () => {
+    const senha = document.getElementById("senha_input_field").value;
+    const senhaCriptografada = hex_sha256(senha);
+
+
+    if (senhaCriptografada === "ce855f48b7422de36b50512a9a0a06a59d4f2f6efac6f439456777a396773cc1") {
+        sessionStorage.setItem('login', true);
+        mostrarTelaPrincipal();
+    } else {
+        alert("Senha incorreta");
+    }
+};
+
+
+const mostrarTelaPrincipal = () => {
+    document.getElementById("login_card").style.display = "none";
+    document.getElementById("header").style.display = "flex";
+    document.getElementById("container").style.display = "grid";
+
+    verificarTimeSelecionado();
+    botoesTimes();
+    adicionarPesquisa();
+};
+
+
+const checkLoginStatus = () => {
+    if (sessionStorage.getItem('login')) {
+        mostrarTelaPrincipal();
+    } else {
+        document.getElementById("login_card").style.display = "flex";
+        document.getElementById("header").style.display = "none";
+        document.getElementById("container").style.display = "none";
+    }
+};
+
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("login_btn").onclick = manipulaBotaoLogin;
+
+    document.getElementById("logout_btn").onclick = () => {
+        sessionStorage.removeItem('login');
+        checkLoginStatus();
+    };
+});
+
+// Funções principais para carregar atletas e montar os cards
 const url = "https://botafogo-atletas.mange.li/2024-1/";
 
 const pega_json = async (caminho) => {
@@ -18,7 +63,6 @@ const montaCard = (atleta) => {
 
     imagem.src = atleta.imagem;
     cartao.appendChild(imagem);
-
 
     link.innerHTML = "Ver mais";
     link.href = `detalhes.html?id=${atleta.id}`;
@@ -44,36 +88,21 @@ const verificarTimeSelecionado = () => {
 };
 
 const botoesTimes = () => {
-    let botoesContainer = document.getElementById("escolher_elenco");
-
-    if (!botoesContainer) {
-        botoesContainer = document.createElement("div");
-        botoesContainer.id = "botoes";
-        document.body.appendChild(botoesContainer);
-    }
-
-    if (window.innerWidth > 768) {
-        botoesContainer.innerHTML = `
-            <div class="botao_selecao">
-                <div id="team_selection">
-                    <button class="team_button" data-time="masculino">Time Masculino</button>
-                    <button class="team_button" data-time="feminino">Time Feminino</button>
-                    <button class="team_button" data-time="all">Todos os Atletas</button>
-                </div>
-            </div>
-        `;
-    } else {
-        botoesContainer.innerHTML = `
-            <div class="botao_selecao">
-                <select id="team_dropdown">
-                    <option>ESCOLHA</option>
-                    <option value="masculino">Time Masculino</option>
-                    <option value="feminino">Time Feminino</option>
-                    <option value="all">Todos os Atletas</option>
-                </select>
-            </div>
-        `;
-    }
+    const botoesContainer = document.getElementById("escolher_elenco");
+    botoesContainer.innerHTML = window.innerWidth > 768
+        ? `<div class="botao_selecao">
+             <button class="team_button" data-time="masculino">Time Masculino</button>
+             <button class="team_button" data-time="feminino">Time Feminino</button>
+             <button class="team_button" data-time="all">Todos os Atletas</button>
+           </div>`
+        : `<div class="botao_selecao">
+             <select id="team_dropdown">
+                <option>ESCOLHA</option>
+                <option value="masculino">Time Masculino</option>
+                <option value="feminino">Time Feminino</option>
+                <option value="all">Todos os Atletas</option>
+             </select>
+           </div>`;
 
     if (window.innerWidth > 768) {
         document.querySelectorAll(".team_button").forEach(button => {
@@ -91,48 +120,21 @@ const botoesTimes = () => {
 };
 
 const adicionarPesquisa = () => {
-    const pesquisaContainer = document.createElement("div");
-    pesquisaContainer.id = "pesquisa-container";
+    const pesquisaContainer = document.getElementById("pesquisa-container");
+    document.getElementById("pesquisa-container").style.display = "flex";
 
-    const inputPesquisa = document.createElement("input");
-    inputPesquisa.type = "text";
-    inputPesquisa.placeholder = "Pesquisar atleta...";
-    pesquisaContainer.appendChild(inputPesquisa);
-    document.body.insertBefore(pesquisaContainer, document.getElementById("container"));
+    const inputPesquisa = document.getElementById("input_pesquisa");
 
     inputPesquisa.addEventListener("input", (e) => {
         const pesquisa = e.target.value;
         const timeSelecionado = sessionStorage.getItem('timeSelecionado');
         if (timeSelecionado) {
             carregaAtletas(timeSelecionado, pesquisa);
-            console.log(pesquisa);
         }
     });
 };
 
-const checkLoginStatus = () => {
-    if (!sessionStorage.getItem('login')) {
-        window.location.href = "login.html";
-    } else {
-        document.getElementById("header").style.display = "flex";
-        document.getElementById("logout_btn").style.display = "flex";
-    }
-};
+window.addEventListener('resize', botoesTimes);
 
-document.getElementById("logout_btn").onclick = () => {
-    document.getElementById("container").innerHTML = "";
-    sessionStorage.removeItem('login');
-    sessionStorage.removeItem('timeSelecionado');  // Limpar a seleção do time
-    document.getElementById("header").style.display = "none";
-    document.getElementById("logout_btn").style.display = "none";
-    checkLoginStatus();
-};
 
-window.onload = () => {
-    checkLoginStatus();
-    verificarTimeSelecionado();
-    botoesTimes();
-    adicionarPesquisa();
-};
-
-window.addEventListener("resize", botoesTimes);
+window.onload = checkLoginStatus;
