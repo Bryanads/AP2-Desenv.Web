@@ -1,0 +1,75 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #000;
+}
+
+h1{
+    color: white;
+    margin: 3rem 3rem 3rem 0rem;
+
+}
+
+h2{
+    color: white;
+    margin: 3rem 3rem 3rem 0rem;
+}
+
+#login_card {
+    background-color: #fff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    width: 300px;
+}
+
+#login_card p {
+    font-size: 16px;
+    margin-bottom: 20px;
+    color: #000;
+}
+
+#senha_input_field {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 16px;
+}
+
+#login_btn {
+    background-color: #000;
+    color: #fff;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 16px;
+    width: 100%;
+}
+
+#login_btn:hover {
+    background-color: #858585;
+    color: #000;
+}
+
+
+
+@media (max-width: 768px) {
+    body {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    #login_card {
+        width: 100%;
+        padding: 20px;
+    }
+}
